@@ -1,0 +1,11 @@
+fastapi
+requests
+uvicorn[standard]
+sentencepiece
+torch
+transformers
+torchvision
+torchaudio
+numpy
+pandas
+chromadb
