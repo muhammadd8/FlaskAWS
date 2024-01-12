@@ -6,5 +6,5 @@ class DataPreprocessor:
 
     def preprocessing_dataset(self, articles):
         # Split articles into documents
-        docs = self.text_splitter.create_documents(articles[:100])
+        docs = self.text_splitter.split_documents(articles)
         return docs

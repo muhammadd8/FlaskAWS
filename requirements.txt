@@ -9,3 +9,6 @@ torchaudio
 numpy
 pandas
 chromadb
+boto3
+pypdf
+langchain
