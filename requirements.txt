@@ -12,3 +12,5 @@ chromadb
 boto3
 pypdf
 langchain
+flask
+ctransformers

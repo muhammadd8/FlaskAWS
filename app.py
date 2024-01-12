@@ -1,4 +1,3 @@
-from fastapi import FastAPI
 from transformers import pipeline
 from langchain.llms import CTransformers #to get llm
 from langchain.prompts import ChatPromptTemplate
@@ -46,12 +45,6 @@ def generate():
     text = request.args.get('query')
     # text = request.query_string.decode()
     print(text)
-    client = chromadb.Client()
-    collection_name = "new_scientific_papers"
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=256, chunk_overlap=20)
-
-    vector_db_storer = VectorDBStorer(client, collection_name, text_splitter, BUCKET)
-    collection = vector_db_storer.get_collection()
 
     results = collection.query(
                  query_texts=text,
@@ -84,6 +77,13 @@ def upload():
             # Display success or error message
             if success:
                 message = "File successfully uploaded to S3!"
+                
+                client = chromadb.Client()
+                collection_name = "new_scientific_papers"
+                text_splitter = RecursiveCharacterTextSplitter(chunk_size=256, chunk_overlap=20)
+
+                vector_db_storer = VectorDBStorer(client, collection_name, text_splitter, BUCKET)
+                collection = vector_db_storer.get_collection()
             else:
                 message = f"Error uploading file to S3: {upload_response}"
 
@@ -92,4 +92,4 @@ def upload():
     
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)

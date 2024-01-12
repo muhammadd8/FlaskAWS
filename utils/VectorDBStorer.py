@@ -43,5 +43,3 @@ class VectorDBStorer:
     def get_collection(self):
         return self.store_Vectordb()
     
-    def get_collection_only(self):
-        return self.client.get_collection(name=self.collection_name)
