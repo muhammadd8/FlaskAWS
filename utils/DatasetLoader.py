@@ -11,16 +11,16 @@ class DatasetLoader:
         self.bucket = bucket
         if not os.path.exists(self.local):
             os.makedirs(self.local)
-
+ 
     def download_dir(self):
         # select bucket
         my_bucket = self.resource.Bucket(self.bucket)
-
         # download file into current directory
         for s3_object in my_bucket.objects.all():
-            # Need to split s3_object.key into path and file name, else it will give error file not found.
-            path, filename = os.path.split(s3_object.key)
-            my_bucket.download_file(s3_object.key, os.path.join(self.local, filename))
+            if s3_object.key.startswith("dataset/"):
+                filename = os.path.basename(s3_object.key)
+                my_bucket.download_file(s3_object.key, os.path.join(self.local, filename))
+                print('Downloaded file:', s3_object.key)
 
     def load_dataset(self):
         self.download_dir()

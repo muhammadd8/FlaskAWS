@@ -19,7 +19,7 @@ class VectorDBStorer:
         try:
             collection = self.client.get_or_create_collection(name=self.collection_name)
             print(f"Collection '{self.collection_name}' exists!")
-
+ 
             if len(collection.get()['documents']) == 0:
                 # Load articles from dataset
                 client = boto3.client('s3', aws_access_key_id=self.aws_access_key, aws_secret_access_key=self.aws_secret_key, region_name=self.region_name)

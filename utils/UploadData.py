@@ -1,4 +1,5 @@
 import boto3
+import os
 
 class UploadData:
     def __init__(self) -> None:
@@ -10,10 +11,12 @@ class UploadData:
 
     def upload(self, file_name, bucket):
         object_name = file_name
+        filename = os.path.basename(file_name)
         s3_client = boto3.client('s3', aws_access_key_id=self.aws_access_key, aws_secret_access_key=self.aws_secret_key, region_name=self.region_name)
-        self.s3_key = f"dataset/{object_name}"
+        self.s3_key = f"dataset/{filename}"
         try:
             response = s3_client.upload_file(file_name, bucket, self.s3_key)
             return True, response
         except Exception as e:
             return False, str(e)
+        
